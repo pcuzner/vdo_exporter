@@ -1,0 +1,17 @@
+[Unit]
+Description=VDO Prometheus exporter
+
+After=vdo.service network-online.target
+Wants=network-online.target vdo.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/bin/vdo_exporter
+Restart=on-failure
+StartLimitInterval=30min
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target
