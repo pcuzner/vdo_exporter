@@ -1,9 +1,12 @@
 # vdo_exporter
-Python2 based prometheus exporter for VDO volumes. This isn't intended to be a production level solution, but rather a POC to help identify which metrics make the most sense to consumers of the vdo statistics.  
+VDO is a kernel subsystem that provides compression and deduplication to a Linux device. This project provides a Python2 based prometheus exporter
+ for VDO volume statistics. Once exported, you may visualise the data and define alerts within Prometheus itself, or
+  define dashboards and alerts in systems like Grafana.  
 
 ## Background  
-Ideally you'd use the python prometheus-client package through rpm, or even pip - but to cut down on these
-dependencies I've just used 'standard' python.  
+Writing an exporter for prometheus would normally entail using the prometheus-client python package, but at the time of writing
+the rpm for this wasn't available for CentOS or RHEL. So this project just uses standard python features to implement
+the exporter (a prometheus client is just a http endpoint anyway!)
 
 I've tested against vm's with the following configurations;  
    
@@ -46,7 +49,11 @@ e.g. under scrape_configs
     static_configs:
       - targets: [ '10.90.90.82:9285', '10.90.90.123:9285', '10.90.90.121:9285']
 ```
-then reload prometheus (SIGHUP)
+then reload prometheus (SIGHUP)  
+
+*NB. if you're interested in bring the VDO stats together with Ceph, you should use
+DNS names instead of IP addresses. This will allow your promQL to match up on the exported_instance labels
+exposed by the ceph-mgr prometheus plugin.*
 
 ## Grafana Configuration  
 I've included a dashboard to show some of the stats the exporter provides. Just import the 
