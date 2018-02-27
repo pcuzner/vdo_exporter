@@ -4,7 +4,6 @@ import signal
 
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from SocketServer import ThreadingMixIn
-import threading
 from vdo_exporter import VDOStats
 
 
