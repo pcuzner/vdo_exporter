@@ -51,8 +51,8 @@ e.g. under scrape_configs
 ```
 then reload Prometheus (SIGHUP)  
 
-*NB. if you're interested in bringing the VDO stats together with Ceph, you should use
-DNS names instead of IP addresses within the scrape definition. This will allow your promQL to 'match' across metrics based on "exported_instance" and "instance".
+*NB.   
+if you're interested in bringing the VDO stats together with Ceph, you should use DNS names instead of IP addresses within the scrape definition. This will allow your promQL to 'match' across metrics based on "exported_instance" and "instance".*
 
 ## Grafana Configuration  
 I've included a dashboard to show some of the stats the exporter provides. Just import the
