@@ -113,7 +113,12 @@ class VDOStats(object):
                             "recovery_active": recovery_active,
                             "journal_full": journal_full,
                             "write_policy": write_policy}
-            saving = 1 - (phys_used / float(log_used))
+
+            # For occasional log_used=0 scenarios, try/except is faster
+            try:
+                saving = 1 - (phys_used / float(log_used))
+            except ZeroDivisionError:
+                saving = 0
 
             savings_percent.add(labels, saving)
             physical_size.add(labels, phys_bytes)
