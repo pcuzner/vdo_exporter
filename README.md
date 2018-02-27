@@ -49,15 +49,15 @@ e.g. under scrape_configs
     static_configs:
       - targets: [ '10.90.90.82:9285', '10.90.90.123:9285', '10.90.90.121:9285']
 ```
-then reload prometheus (SIGHUP)  
+then reload Prometheus (SIGHUP)  
 
-*NB. if you're interested in bring the VDO stats together with Ceph, you should use
-DNS names instead of IP addresses. This will allow your promQL to match up on the exported_instance labels
-exposed by the ceph-mgr prometheus plugin.*
+*NB. if you're interested in bringing the VDO stats together with Ceph, you should use
+DNS names instead of IP addresses within the scrape definition. This will allow your promQL to 'match' across metrics based on "exported_instance" and "instance".
 
 ## Grafana Configuration  
 I've included a dashboard to show some of the stats the exporter provides. Just import the
 the 'VDO Tests.json' dashboard into Grafana, then open the dashboard.  
 
-You should see something like  
+You should see something like;  
+
 ![screenshot](/screenshots/vdo_dashboard.png)
