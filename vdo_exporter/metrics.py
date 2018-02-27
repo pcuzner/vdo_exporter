@@ -79,8 +79,8 @@ class VDOStats(object):
         cache_hits = Metric("Read cache hits to the volume", "gauge")
         volume_metadata = Metric("Volume meta data", "gauge")
         no_space_count = Metric("Volume no space error count", "gauge")
-        volume_errors = Metric("Volume error total (PBN + read-only + nospace)",
-                               "gauge")
+        volume_errors = Metric("Volume error total (PBN + read-only + "
+                               "nospace)", "gauge")
 
         for vol in self.kvdo.volumes:
 
@@ -105,14 +105,14 @@ class VDOStats(object):
 
             labels = {"vol_name": vol.name}
             metadata_labels = {"vol_name": vol.name,
-                            "backing_device": vol.backing_device,
-                            "dm_holder": vol.dm_holder,
-                            "compression": vol.compression,
-                            "dedupe": vol.dedupe,
-                            "mode": mode,
-                            "recovery_active": recovery_active,
-                            "journal_full": journal_full,
-                            "write_policy": write_policy}
+                               "backing_device": vol.backing_device,
+                               "dm_holder": vol.dm_holder,
+                               "compression": vol.compression,
+                               "dedupe": vol.dedupe,
+                               "mode": mode,
+                               "recovery_active": recovery_active,
+                               "journal_full": journal_full,
+                               "write_policy": write_policy}
 
             # For occasional log_used=0 scenarios, try/except is faster
             try:
@@ -132,8 +132,6 @@ class VDOStats(object):
             no_space_count.add(labels, no_space_errors)
             volume_errors.add(labels, error_total)
 
-
-
         self.metrics['vdo_exporter_volume_savings_percent'] = savings_percent
         self.metrics['vdo_exporter_volume_physical_bytes'] = physical_size
         self.metrics['vdo_exporter_volume_physical_bytes_used'] = physical_used
@@ -144,4 +142,5 @@ class VDOStats(object):
         self.metrics['vdo_exporter_volume_read_cache_hits'] = cache_hits
         self.metrics['vdo_exporter_volume_metadata'] = volume_metadata
         self.metrics['vdo_exporter_volume_error_total'] = volume_errors
-        self.metrics['vdo_exporter_volume_no_space_error_total'] = no_space_count
+        self.metrics['vdo_exporter_volume_no_space_error_total'] = \
+            no_space_count
