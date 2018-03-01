@@ -54,10 +54,10 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "hideControls": false,
+  "hideControls": true,
   "id": null,
   "links": [],
   "refresh": "15s",
@@ -549,7 +549,7 @@
             }
           ],
           "maxDataPoints": 100,
-          "minSpan": 1,
+          "minSpan": 2,
           "nullPointMode": "connected",
           "nullText": null,
           "postfix": "",
@@ -574,7 +574,7 @@
           "tableColumn": "",
           "targets": [
             {
-              "expr": "vdo_exporter_volume_savings_percent{vol_name=~\"[[vdo_volumes]]\",instance=~\"[[server]].*\"}",
+              "expr": "vdo_exporter_volume_savings_percent{instance=~\"[[server]].*\"}",
               "format": "time_series",
               "instant": true,
               "intervalFactor": 1,
@@ -689,13 +689,13 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROM}",
-        "hide": 0,
+        "hide": 2,
         "includeAll": true,
         "label": "VDO Volume",
         "multi": false,
         "name": "vdo_volumes",
         "options": [],
-        "query": "label_values(vdo_exporter_volume_metadata, vol_name)",
+        "query": "label_values(vdo_exporter_volume_metadata{instance=~\"[[server]].*\"}, vol_name)",
         "refresh": 1,
         "regex": "",
         "sort": 1,
@@ -759,5 +759,5 @@
   },
   "timezone": "",
   "title": "VDO Tests",
-  "version": 22
+  "version": 30
 }
