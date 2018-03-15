@@ -66,10 +66,13 @@ class VDOStats(object):
         return s.rstrip()
 
     def _get_vol_stats(self):
+
         bin2bool = {0: "N",
                     1: "Y"
                     }
+
         savings_percent = Metric("Percentage space savings", "gauge")
+        used_percent = Metric("Percentage of physical space consumed", "gauge")
         physical_size = Metric("Physical size (bytes)", "gauge")
         physical_used = Metric("Physical space used (bytes)", "gauge")
         overhead_used = Metric("Meta data overhead (bytes)", "gauge")
@@ -81,6 +84,8 @@ class VDOStats(object):
         no_space_count = Metric("Volume no space error count", "gauge")
         volume_errors = Metric("Volume error total (PBN + read-only + "
                                "nospace)", "gauge")
+        write_amplification = Metric("Write amplication (user writes vs "
+                                     "system writes)", "gauge")
 
         for vol in self.kvdo.volumes:
 
@@ -99,6 +104,10 @@ class VDOStats(object):
             write_policy = vol.get_stat('write_policy')
             read_cache_hits = vol.get_stat('read_cache_hits')
 
+            write_amp = ((vol.get_stat('bios_meta_write') +
+                         vol.get_stat('bios_out_write')) /
+                         float(vol.get_stat('bios_in_write')))
+
             recovery_active = bin2bool[vol.get_stat('in_recovery_mode')]
             journal_full = bin2bool[vol.get_stat('journal_disk_full')]
             mode = vol.get_stat('mode')
@@ -114,13 +123,20 @@ class VDOStats(object):
                                "journal_full": journal_full,
                                "write_policy": write_policy}
 
-            # For occasional log_used=0 scenarios, try/except is faster
+            # For new volumes logical blocks could be zero, so catch it
             try:
-                saving = 1 - (phys_used / float(log_used))
+                saving = (100 * (vol.get_stat("logical_blocks_used") -
+                                 vol.get_stat("data_blocks_used")) /
+                          vol.get_stat("logical_blocks_used"))
             except ZeroDivisionError:
                 saving = 0
 
+            used_pct = int((100 * (vol.get_stat("data_blocks_used") +
+                                   vol.get_stat("overhead_blocks_used")) /
+                           vol.get_stat("physical_blocks")) + 0.5)
+
             savings_percent.add(labels, saving)
+            used_percent.add(labels, used_pct)
             physical_size.add(labels, phys_bytes)
             physical_used.add(labels, phys_used)
             overhead_used.add(labels, overhead_bytes)
@@ -131,6 +147,7 @@ class VDOStats(object):
             volume_metadata.add(metadata_labels, 0)
             no_space_count.add(labels, no_space_errors)
             volume_errors.add(labels, error_total)
+            write_amplification.add(labels, write_amp)
 
         self.metrics['vdo_exporter_volume_savings_percent'] = savings_percent
         self.metrics['vdo_exporter_volume_physical_bytes'] = physical_size
@@ -144,3 +161,6 @@ class VDOStats(object):
         self.metrics['vdo_exporter_volume_error_total'] = volume_errors
         self.metrics['vdo_exporter_volume_no_space_error_total'] = \
             no_space_count
+        self.metrics['vdo_exporter_volume_write_amplication'] = \
+            write_amplification
+        self.metrics['vdo_exporter_volume_used_percent'] = used_percent
