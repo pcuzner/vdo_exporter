@@ -285,7 +285,7 @@
             "#d44a3a"
           ],
           "datasource": "${DS_PROM}",
-          "format": "percentunit",
+          "format": "percent",
           "gauge": {
             "maxValue": 100,
             "minValue": 0,
@@ -525,8 +525,8 @@
             "#d44a3a"
           ],
           "datasource": "${DS_PROM}",
-          "decimals": 1,
-          "format": "percentunit",
+          "decimals": 0,
+          "format": "percent",
           "gauge": {
             "maxValue": 100,
             "minValue": 0,
@@ -564,7 +564,7 @@
             }
           ],
           "repeat": "vdo_volumes",
-          "span": 3,
+          "span": 12,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -759,5 +759,5 @@
   },
   "timezone": "",
   "title": "VDO Tests",
-  "version": 30
+  "version": 32
 }
