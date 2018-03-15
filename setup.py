@@ -16,8 +16,8 @@ else:
 # idea from http://stackoverflow.com/a/11400431/2139420
 class StripExtension(distutils.command.install_scripts.install_scripts):
     """
-    Class to handle the stripping of .py extensions in for executable file names
-    making them more user friendly
+    Class to handle the stripping of .py extensions in for executable file
+    names making them more user friendly
     """
     def run(self):
         distutils.command.install_scripts.install_scripts.run(self)
@@ -28,7 +28,7 @@ class StripExtension(distutils.command.install_scripts.install_scripts):
 
 setup(
     name="vdo_exporter",
-    version="0.5.1",
+    version="0.5.7",
     description="Prometheus exporter for VDO kernel statistics",
     long_description=long_description,
     author="Paul Cuzner",
