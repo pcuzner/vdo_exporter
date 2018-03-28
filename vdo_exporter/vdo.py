@@ -83,7 +83,9 @@ class VDOVolume(object):
                                                                dm_device)
 
         # something like this ../pci0000:00/0000:00:09.0/virtio4/block/vdb/vdb2
-        real_dev = os.path.realpath(links[0]).split('/')[-2]
+        dev_path_items = os.path.realpath(links[0]).split('/')
+        real_dev_ptr = dev_path_items.index('block') + 1
+        real_dev = dev_path_items[real_dev_ptr]
         return real_dev
 
     @property
