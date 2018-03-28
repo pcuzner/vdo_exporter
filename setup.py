@@ -28,7 +28,7 @@ class StripExtension(distutils.command.install_scripts.install_scripts):
 
 setup(
     name="vdo_exporter",
-    version="0.5.7",
+    version="0.5.7p1",
     description="Prometheus exporter for VDO kernel statistics",
     long_description=long_description,
     author="Paul Cuzner",
