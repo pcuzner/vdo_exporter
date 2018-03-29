@@ -60,4 +60,4 @@ the 'VDO Tests.json' dashboard into Grafana, then open the dashboard.
 
 You should see something like;  
 
-![screenshot](/screenshots/vdo_dashboard.png)
+![screenshot](/screenshots/vdo_information_demo.gif)
