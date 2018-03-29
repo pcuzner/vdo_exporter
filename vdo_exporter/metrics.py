@@ -104,9 +104,12 @@ class VDOStats(object):
             write_policy = vol.get_stat('write_policy')
             read_cache_hits = vol.get_stat('read_cache_hits')
 
-            write_amp = ((vol.get_stat('bios_meta_write') +
-                         vol.get_stat('bios_out_write')) /
-                         float(vol.get_stat('bios_in_write')))
+            try:
+                write_amp = ((vol.get_stat('bios_meta_write') +
+                             vol.get_stat('bios_out_write')) /
+                             float(vol.get_stat('bios_in_write')))
+            except ZeroDivisionError:
+                write_amp = 0
 
             recovery_active = bin2bool[vol.get_stat('in_recovery_mode')]
             journal_full = bin2bool[vol.get_stat('journal_disk_full')]
