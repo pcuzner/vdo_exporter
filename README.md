@@ -56,7 +56,7 @@ if you're interested in bringing the VDO stats together with Ceph, you should us
 
 ## Grafana Configuration  
 I've included a dashboard to show some of the stats the exporter provides. Just import the
-the 'VDO Tests.json' dashboard into Grafana, then open the dashboard.  
+the 'VDO_Information.json' dashboard from the grafana subdirectory into Grafana, then open the dashboard.  
 
 You should see something like;  
 
