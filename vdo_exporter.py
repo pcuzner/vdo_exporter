@@ -98,7 +98,7 @@ def get_opts():
     parser.add_argument('--debug', action="store_true",
                         default=False)
     parser.add_argument('--port', type=valid_tcp_port,
-                        default=9285)
+                        default=9286)
     parser.add_argument('--ip', type=valid_ipv4,
                         default='0.0.0.0')
     parser.add_argument('--quiet', action="store_true",
